@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonic Feedback</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #090042, #0c0058, #1a006c, #240090);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: #c2c8ff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .window {
+            background-color: #14143a;
+            width: 95%;
+            max-width: 560px;
+            border-radius: 24px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 2px solid #4e3dff;
+        }
+        
+        .window-header {
+            background-color: #3a1f8c;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 3px solid #5022c9;
+        }
+        
+        .window-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #c2c8ff;
+        }
+        
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .control {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+        
+        .control.close {
+            background-color: #ff6b6b;
+        }
+        
+        .control.minimize {
+            background-color: #ffd93d;
+        }
+        
+        .control.maximize {
+            background-color: #6bcb77;
+        }
+        
+        .window-content {
+            padding: 30px;
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #4e3dff;
+            text-shadow: 0 0 10px rgba(78, 61, 255, 0.3);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #c2c8ff;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 2px solid #3a1f8c;
+            background-color: #1e1e45;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            color: #ffffff;
+        }
+        
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #4e3dff;
+            box-shadow: 0 0 10px rgba(78, 61, 255, 0.3);
+        }
+        
+        input::placeholder,
+        textarea::placeholder {
+            color: #6b6b99;
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .mood-selector {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .mood-option {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            background-color: #1e1e45;
+            padding: 10px;
+            border-radius: 15px;
+            border: 2px solid transparent;
+        }
+        
+        .mood-option:hover {
+            transform: scale(1.1);
+            border-color: #4e3dff;
+        }
+        
+        .mood-emoji {
+            font-size: 36px;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        .mood-label {
+            font-size: 12px;
+            color: #c2c8ff;
+        }
+        
+        .mood-radio {
+            display: none;
+        }
+        
+        .mood-radio:checked + .mood-option {
+            border-color: #4e3dff;
+            box-shadow: 0 0 15px rgba(78, 61, 255, 0.5);
+        }
+        
+        .mood-radio:checked + .mood-option .mood-emoji {
+            animation: bounce 0.5s;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .submit-btn {
+            background: linear-gradient(45deg, #3a1f8c, #4e3dff);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto 0;
+            box-shadow: 0 4px 15px rgba(78, 61, 255, 0.3);
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(78, 61, 255, 0.6);
+            background: linear-gradient(45deg, #4e3dff, #6a5aff);
+        }
+        
+        .decorations {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .ring {
+            position: absolute;
+            color: gold;
+            opacity: 0.4;
+            animation: float 5s infinite ease-in-out;
+            font-size: 30px;
+        }
+        
+        .ring1 {
+            bottom: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .ring2 {
+            top: 15%;
+            right: 10%;
+            animation-delay: 1s;
+        }
+        
+        .ring3 {
+            top: 80%;
+            right: 20%;
+            animation-delay: 2s;
+        }
+        
+        .ring4 {
+            top: 30%;
+            left: 15%;
+            animation-delay: 3s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(20px) rotate(5deg); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .window {
+                width: 95%;
+            }
+            
+            .window-content {
+                padding: 20px;
+            }
+            
+            .mood-emoji {
+                font-size: 28px;
+            }
+            
+            .mood-label {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="decorations">
+        <div class="ring ring1">💍</div>
+        <div class="ring ring2">💍</div>
+        <div class="ring ring3">💍</div>
+        <div class="ring ring4">💍</div>
+    </div>
+
+    <div class="window">
+        <div class="window-header">
+            <div class="window-title">
+                <span>🦔</span>
+                <span>Sonic Feedback</span>
+            </div>
+            <div class="window-controls">
+                <div class="control minimize"></div>
+                <div class="control maximize"></div>
+                <div class="control close"></div>
+            </div>
+        </div>
+        
+        <div class="window-content">
+            <div class="form-header">
+                <h1>How fast was your experience?</h1>
+                <p>Gotta go fast! Tell us what you think!</p>
+            </div>
+            
+            <form id="feedbackForm" action="home.html" method="post">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Rate your experience speed</label>
+                    <div class="mood-selector">
+                        <input type="radio" name="mood" id="mood-1" value="supersonic" class="mood-radio">
+                        <label for="mood-1" class="mood-option">
+                            <span class="mood-emoji">🚀</span>
+                            <span class="mood-label">Super Sonic!</span>
+                        </label>
+                        
+                        <input type="radio" name="mood" id="mood-2" value="fast" class="mood-radio">
+                        <label for="mood-2" class="mood-option">
+                            <span class="mood-emoji">⚡</span>
+                            <span class="mood-label">Fast</span>
+                        </label>
+                        
+                        <input type="radio" name="mood" id="mood-3" value="average" class="mood-radio">
+                        <label for="mood-3" class="mood-option">
+                            <span class="mood-emoji">🏃</span>
+                            <span class="mood-label">Average</span>
+                        </label>
+                        
+                        <input type="radio" name="mood" id="mood-4" value="slow" class="mood-radio">
+                        <label for="mood-4" class="mood-option">
+                            <span class="mood-emoji">🐢</span>
+                            <span class="mood-label">Slow</span>
+                        </label>
+                        
+                        <input type="radio" name="mood" id="mood-5" value="crashed" class="mood-radio">
+                        <label for="mood-5" class="mood-option">
+                            <span class="mood-emoji">💥</span>
+                            <span class="mood-label">Crashed</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Tell us more</label>
+                    <textarea id="message" name="message" placeholder="Share your thoughts with us..." required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit & Spin Dash 🦔</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default submission
+            console.log("Form submitted! Redirecting to home.html");
+            window.location.href = "home.html"; // Redirect manually
+        });
+        
+        // Make the mood options interactive
+        const moodOptions = document.querySelectorAll('.mood-option');
+        moodOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const input = document.querySelector(`#${this.getAttribute('for')}`);
+                input.checked = true;
+            });
+        });
+    </script>
+</body>
+</html>

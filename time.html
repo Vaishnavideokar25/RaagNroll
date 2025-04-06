@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎶 Sonic Vibes – Pick Your Perfect Time 🎶</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+    body {
+      background: radial-gradient(circle, #3a326d 0%, #231d4b 100%);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      overflow-x: hidden;
+    }
+
+    .music-note {
+      position: absolute;
+      font-size: 22px;
+      animation: float 15s linear infinite;
+      opacity: 0.3;
+      z-index: -1;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .light-orb {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 20px 5px rgba(100, 180, 255, 0.4);
+      z-index: -1;
+      animation: pulse 4s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.3; }
+      100% { transform: scale(1.5); opacity: 0.7; }
+    }
+
+    .header {
+      width: 100%;
+      padding: 40px 0 10px;
+      position: relative;
+    }
+
+    .emoji-decor {
+      position: absolute;
+      font-size: 1.8rem;
+      opacity: 0.8;
+      animation: floatSlow 8s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatSlow {
+      0% { transform: translateY(0) rotate(-5deg); }
+      100% { transform: translateY(-10px) rotate(5deg); }
+    }
+
+    .title-wrapper {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      position: relative;
+    }
+
+    .title {
+      font-size: 4em;
+      font-weight: 700;
+      letter-spacing: 3px;
+      margin: 0;
+      animation: colorChange 6s infinite alternate;
+    }
+
+    .title-emoji {
+      font-size: 2.2rem;
+      transition: transform 0.3s ease;
+      margin: 0 20px;
+    }
+
+    .title-emoji:hover {
+      transform: scale(1.2) rotate(10deg);
+    }
+
+    .title-side {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .sub-text {
+      font-size: 1.2rem;
+      margin: 15px 0 30px;
+      opacity: 0.8;
+      font-style: italic;
+      animation: pulseText 4s infinite alternate;
+    }
+
+    @keyframes pulseText {
+      0% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes colorChange {
+      0% { color: #3c9de9; text-shadow: 0 0 15px rgba(60, 157, 233, 0.7); }
+      50% { color: #8c5ae9; text-shadow: 0 0 15px rgba(140, 90, 233, 0.7); }
+      100% { color: #3c9de9; text-shadow: 0 0 15px rgba(60, 157, 233, 0.7); }
+    }
+
+    .main-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+
+    .grid-container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      width: 90%;
+      max-width: 1200px;
+      margin: 20px 0 60px 0;
+    }
+
+    .row {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .time-slot {
+      position: relative;
+      width: 220px;  /* Increased from 160px */
+      height: 220px; /* Increased from 160px */
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0px 8px 25px rgba(60, 157, 233, 0.5);
+      transition: transform 0.3s, box-shadow 0.3s;
+      background: rgba(60, 157, 233, 0.1);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .time-slot:nth-child(odd) { transform: rotate(-3deg); }
+    .time-slot:nth-child(even) { transform: rotate(3deg); }
+
+    .time-slot:hover {
+      transform: scale(1.08) rotate(0deg);
+      box-shadow: 0px 10px 35px rgba(60, 157, 233, 0.8);
+      z-index: 10;
+    }
+
+    .time-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 22px;
+      filter: brightness(80%);
+      transition: filter 0.3s ease-in-out;
+    }
+
+    .time-slot:hover img {
+      filter: brightness(100%);
+    }
+
+    .time-text {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      color: #3c9de9;
+      text-shadow: 0 0 8px rgba(60, 157, 233, 1);
+      font-size: 1.7em;
+      font-weight: bold;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+    }
+
+    .time-emoji {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      font-size: 2.2rem;
+      filter: drop-shadow(0 0 3px rgba(0,0,0,0.7));
+      opacity: 0.9;
+      z-index: 5;
+    }
+
+    .time-slot:hover .time-text {
+      opacity: 1;
+    }
+
+    .toggle-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(60, 157, 233, 0.2);
+      border: 2px solid #3c9de9;
+      border-radius: 25px;
+      padding: 8px 16px;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+      z-index: 100;
+    }
+
+    .toggle-btn:hover {
+      background: rgba(60, 157, 233, 0.4);
+      box-shadow: 0 0 15px rgba(60, 157, 233, 0.7);
+    }
+
+    .footer {
+      width: 100%;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      position: relative;
+      padding: 20px 0;
+    }
+
+    .footer-emoji-container {
+      width: 90%;
+      position: absolute;
+      display: flex;
+      justify-content: space-between;
+      bottom: 15px;
+    }
+
+    .footer-emoji {
+      font-size: 1.8rem;
+      animation: bounce 3s infinite alternate;
+      margin: 0 40px;
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+
+    .decorative-bar {
+      width: 80%;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #3c9de9, transparent);
+      border-radius: 2px;
+    }
+
+    @media (max-width: 960px) {
+      .title {
+        font-size: 3em;
+      }
+      .time-slot {
+        width: 180px;
+        height: 180px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .time-slot {
+        width: 150px;
+        height: 150px;
+      }
+      .time-emoji {
+        font-size: 1.8rem;
+      }
+      .time-text {
+        font-size: 1.4em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating music notes & lights -->
+  <script>
+    const musicNotes = ['♪', '♫', '🎵', '🎶', '🎸', '🎹', '🎷', '🎺'];
+    for (let i = 0; i < 15; i++) {
+      const note = document.createElement('div');
+      note.className = 'music-note';
+      note.textContent = musicNotes[Math.floor(Math.random() * musicNotes.length)];
+      note.style.left = `${Math.random() * 100}%`;
+      note.style.animationDuration = `${15 + Math.random() * 20}s`;
+      note.style.animationDelay = `${Math.random() * 5}s`;
+      document.body.appendChild(note);
+    }
+
+    for (let i = 0; i < 30; i++) {
+      const orb = document.createElement('div');
+      orb.className = 'light-orb';
+      orb.style.left = `${Math.random() * 100}%`;
+      orb.style.top = `${Math.random() * 100}%`;
+      orb.style.animationDuration = `${4 + Math.random() * 6}s`;
+      orb.style.animationDelay = `${Math.random() * 5}s`;
+      document.body.appendChild(orb);
+    }
+  </script>
+
+  <button class="toggle-btn" onclick="toggleMode()">Toggle Mode</button>
+
+  <!-- Emojis around the header -->
+  <div class="emoji-decor" style="top: 20px; left: 10%;">🎤</div>
+  <div class="emoji-decor" style="top: 50px; left: 30%;">🎼</div>
+  <div class="emoji-decor" style="top: 10px; right: 30%;">🎹</div>
+  <div class="emoji-decor" style="top: 40px; right: 10%;">🎷</div>
+
+  <!-- Title section with emoji decorations -->
+  <div class="header">
+    <div class="title-wrapper">
+      <div class="title-side">
+        <span class="title-emoji">🌅</span>
+        <span class="title-emoji">🌞</span>
+      </div>
+      <h1 class="title">Pick Your Perfect Time!</h1>
+      <div class="title-side">
+        <span class="title-emoji">🌃</span>
+        <span class="title-emoji">🌛</span>
+      </div>
+    </div>
+    <p class="sub-text">Tap a moment in time and let the music set the mood...</p>
+  </div>
+
+  <div class="main-content">
+    <div class="grid-container">
+      <div class="row">
+        <div class="time-slot" onclick="selectTime('morning')">
+          <img src="./public/morning.jpg" alt="Morning">
+          <div class="time-text">Rise & Shine</div>
+          <div class="time-emoji">🌅</div>
+        </div>
+        <div class="time-slot" onclick="selectTime('afternoon')">
+          <img src="./public/afternoon.jpg" alt="Afternoon">
+          <div class="time-text">Midday Groove</div>
+          <div class="time-emoji">☀️</div>
+        </div>
+        <div class="time-slot" onclick="selectTime('evening')">
+          <img src="./public/evening.jpg" alt="Evening">
+          <div class="time-text">Sunset Serenity</div>
+          <div class="time-emoji">🌆</div>
+        </div>
+        <div class="time-slot" onclick="selectTime('night')">
+          <img src="./public/night.jpg" alt="Night">
+          <div class="time-text">Midnight Magic</div>
+          <div class="time-emoji">🌃</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <!-- Footer emojis -->
+    <div class="footer-emoji-container">
+      <div style="display: flex; gap: 60px;">
+        <div class="footer-emoji">🎺</div>
+        <div class="footer-emoji">🥁</div>
+      </div>
+      <div style="display: flex; gap: 60px;">
+        <div class="footer-emoji">🎷</div>
+        <div class="footer-emoji">🎹</div>
+      </div>
+    </div>
+    
+    <div class="decorative-bar"></div>
+  </div>
+
+  <!-- 🎶 Background Music -->
+  <audio autoplay loop>
+    <source src="./public/lofi.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
+  </audio>
+
+  <script>
+    function selectTime(time) {
+      localStorage.setItem("selectedTime", time);
+      window.location.href = "final.html";
+    }
+
+    function toggleMode() {
+      document.body.classList.toggle("light-mode");
+      
+      // We need to add light mode styles if needed, similar to original
+      if (document.body.classList.contains("light-mode")) {
+        document.body.style.background = "radial-gradient(circle, #e0e8ff 0%, #c9d6ff 100%)";
+        document.querySelector(".title").style.color = "#3a326d";
+      } else {
+        document.body.style.background = "radial-gradient(circle, #3a326d 0%, #231d4b 100%)";
+        document.querySelector(".title").style.animation = "colorChange 6s infinite alternate";
+      }
+    }
+  </script>
+
+</body>
+</html>

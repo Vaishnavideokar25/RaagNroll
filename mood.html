@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎶 Sonic Vibes – Pick Your Perfect Mood 🎶</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+    body {
+      background: radial-gradient(circle, #3a326d 0%, #231d4b 100%);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .music-note {
+      position: absolute;
+      font-size: 22px;
+      animation: float 15s linear infinite;
+      opacity: 0.3;
+      z-index: -1;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .light-orb {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 20px 5px rgba(100, 180, 255, 0.4);
+      z-index: -1;
+      animation: pulse 4s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.3; }
+      100% { transform: scale(1.5); opacity: 0.7; }
+    }
+
+    .header {
+      width: 100%;
+      padding: 40px 0 10px;
+      position: relative;
+    }
+
+    .emoji-decor {
+      position: absolute;
+      font-size: 1.8rem;
+      opacity: 0.8;
+      animation: floatSlow 8s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatSlow {
+      0% { transform: translateY(0) rotate(-5deg); }
+      100% { transform: translateY(-10px) rotate(5deg); }
+    }
+
+    .title-wrapper {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      position: relative;
+    }
+
+    .title {
+      font-size: 4em;
+      font-weight: 700;
+      letter-spacing: 3px;
+      margin: 0;
+      animation: colorChange 6s infinite alternate;
+    }
+
+    .title-emoji {
+      font-size: 2.2rem;
+      transition: transform 0.3s ease;
+      margin: 0 20px; /* Increased emoji spacing in title section */
+    }
+
+    .title-emoji:hover {
+      transform: scale(1.2) rotate(10deg);
+    }
+
+    .title-side {
+      display: flex;
+      justify-content: center;
+      gap: 30px; /* Increased gap between title emojis */
+      align-items: center;
+    }
+
+    @keyframes colorChange {
+      0% { color: #3c9de9; text-shadow: 0 0 15px rgba(60, 157, 233, 0.7); }
+      50% { color: #8c5ae9; text-shadow: 0 0 15px rgba(140, 90, 233, 0.7); }
+      100% { color: #3c9de9; text-shadow: 0 0 15px rgba(60, 157, 233, 0.7); }
+    }
+
+    .main-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+
+    /* New grid layout structure */
+    .grid-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      width: 90%;
+      max-width: 1200px;
+      margin: 20px 0 60px 0;
+    }
+
+    .row {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .mood {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0px 6px 20px rgba(60, 157, 233, 0.5);
+      transition: transform 0.3s, box-shadow 0.3s;
+      background: rgba(60, 157, 233, 0.1);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(0deg);
+    }
+
+    .mood:nth-child(odd) { transform: rotate(-3deg); }
+    .mood:nth-child(even) { transform: rotate(3deg); }
+
+    .mood:hover {
+      transform: scale(1.1) rotate(0deg);
+      box-shadow: 0px 6px 35px rgba(60, 157, 233, 0.8);
+      z-index: 10;
+    }
+
+    .mood img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      filter: brightness(80%);
+      transition: filter 0.3s ease-in-out;
+    }
+
+    .mood:hover img {
+      filter: brightness(100%);
+    }
+
+    .mood-text {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      color: #3c9de9;
+      text-shadow: 0 0 8px rgba(60, 157, 233, 1);
+      font-size: 1.5em;
+      font-weight: bold;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+    }
+
+    .mood-emoji {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 1.8rem;
+      filter: drop-shadow(0 0 3px rgba(0,0,0,0.7));
+      opacity: 0.9;
+      z-index: 5;
+    }
+
+    .mood:hover .mood-text {
+      opacity: 1;
+    }
+
+    .footer {
+      width: 100%;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      position: relative;
+    }
+
+    .footer-emoji-container {
+      width: 90%; /* Expanded container width */
+      position: absolute;
+      display: flex;
+      justify-content: space-between;
+      bottom: 15px;
+    }
+
+    .footer-emoji {
+      font-size: 1.8rem;
+      animation: bounce 3s infinite alternate;
+      margin: 0 40px; /* Increased margin between footer emojis */
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+
+    .decorative-bar {
+      width: 80%;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #3c9de9, transparent);
+      border-radius: 2px;
+    }
+
+    @media (max-width: 1200px) {
+      .row {
+        flex-wrap: wrap;
+      }
+      .title {
+        font-size: 3.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating music notes & lights -->
+  <script>
+    const musicNotes = ['♪', '♫', '🎵', '🎶', '🎸', '🎹', '🎷', '🎺'];
+    for (let i = 0; i < 15; i++) { // Reduced number of floating notes for less crowding
+      const note = document.createElement('div');
+      note.className = 'music-note';
+      note.textContent = musicNotes[Math.floor(Math.random() * musicNotes.length)];
+      note.style.left = `${Math.random() * 100}%`;
+      note.style.animationDuration = `${15 + Math.random() * 20}s`;
+      note.style.animationDelay = `${Math.random() * 5}s`;
+      document.body.appendChild(note);
+    }
+
+    for (let i = 0; i < 30; i++) {
+      const orb = document.createElement('div');
+      orb.className = 'light-orb';
+      orb.style.left = `${Math.random() * 100}%`;
+      orb.style.top = `${Math.random() * 100}%`;
+      orb.style.animationDuration = `${4 + Math.random() * 6}s`;
+      orb.style.animationDelay = `${Math.random() * 5}s`;
+      document.body.appendChild(orb);
+    }
+  </script>
+
+  <!-- Emojis around the header - with adjusted positions -->
+  <div class="emoji-decor" style="top: 20px; left: 10%;">🎤</div>
+  <div class="emoji-decor" style="top: 50px; left: 30%;">🎼</div>
+  <div class="emoji-decor" style="top: 10px; right: 30%;">🎹</div>
+  <div class="emoji-decor" style="top: 40px; right: 10%;">🎷</div>
+
+  <!-- Title section with enhanced emoji layout -->
+  <div class="header">
+    <div class="title-wrapper">
+      <div class="title-side">
+        <span class="title-emoji">🎧</span>
+        <span class="title-emoji">🎸</span>
+      </div>
+      <h1 class="title">Pick Your Perfect Vibe!</h1>
+      <div class="title-side">
+        <span class="title-emoji">🎵</span>
+        <span class="title-emoji">🎻</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="grid-container">
+      <!-- First row with 4 mood boxes -->
+      <div class="row">
+        <div class="mood" onclick="selectMood('Joyful')">
+          <img src="./public/happy.png" alt="Happy Mood">
+          <div class="mood-text">Joyful</div>
+          <div class="mood-emoji">😄</div>
+        </div>
+        <div class="mood" onclick="selectMood('Melancholy')">
+          <img src="./public/sad.png" alt="Sad Mood">
+          <div class="mood-text">Melancholy</div>
+          <div class="mood-emoji">😢</div>
+        </div>
+        <div class="mood" onclick="selectMood('Soothing')">
+          <img src="./public/calm.jpg" alt="Calm Mood">
+          <div class="mood-text">Soothing</div>
+          <div class="mood-emoji">😌</div>
+        </div>
+        <div class="mood" onclick="selectMood('Exciting')">
+          <img src="./public/excited.jpg" alt="Excited Mood">
+          <div class="mood-text">Exciting</div>
+          <div class="mood-emoji">🤩</div>
+        </div>
+      </div>
+      
+      <!-- Second row with 3 mood boxes -->
+      <div class="row">
+        <div class="mood" onclick="selectMood('Passionate')">
+          <img src="./public/romantic.jpg" alt="Romantic Mood">
+          <div class="mood-text">Passionate</div>
+          <div class="mood-emoji">❤️</div>
+        </div>
+        <div class="mood" onclick="selectMood('Spiritual')">
+          <img src="./public/meditative.jpg" alt="Meditative Mood">
+          <div class="mood-text">Spiritual</div>
+          <div class="mood-emoji">✨</div>
+        </div>
+        <div class="mood" onclick="selectMood('Lively')">
+          <img src="./public/energetic.jpg" alt="Energetic Mood">
+          <div class="mood-text">Lively</div>
+          <div class="mood-emoji">💃</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <!-- Footer emojis with increased spacing -->
+    <div class="footer-emoji-container">
+      <div style="display: flex; gap: 60px;">
+        <div class="footer-emoji">🎺</div>
+        <div class="footer-emoji">🥁</div>
+      </div>
+      <div style="display: flex; gap: 60px;">
+        <div class="footer-emoji">🎷</div>
+        <div class="footer-emoji">🎹</div>
+      </div>
+    </div>
+    
+    <div class="decorative-bar"></div>
+  </div>
+
+  <script>
+    const moodMap = {
+      "Joyful": "happy",
+      "Melancholy": "sad",
+      "Soothing": "calm",
+      "Exciting": "excited",
+      "Passionate": "romantic",
+      "Spiritual": "meditative",
+      "Lively": "energetic"
+    };
+
+    function selectMood(fancyMood) {
+      const moodKey = moodMap[fancyMood];
+      localStorage.setItem("selectedMood", moodKey);
+      window.location.href = "time.html";
+    }
+  </script>
+
+</body>
+</html>

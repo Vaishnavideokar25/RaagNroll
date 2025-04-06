@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://127.0.0.1:5500/final.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibe: Unlocked 🎧</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+    
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Enhanced animated background */
+    .bg-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    .bg-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #0a1933, #1f4068, #422159, #2c3e50);
+      background-size: 400% 400%;
+      animation: gradient-shift 15s ease infinite;
+      z-index: -1;
+    }
+
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .bg-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(3px);
+      animation: float-particle 15s linear infinite;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+
+    @keyframes float-particle {
+      0% {
+        transform: translateY(100vh) translateX(0) scale(1);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.8;
+      }
+      50% {
+        transform: translateY(50vh) translateX(50px) scale(1.2);
+      }
+      90% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-100px) translateX(100px) scale(0.8);
+        opacity: 0;
+      }
+    }
+
+    .wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%234c4177" fill-opacity="0.4" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,208C672,181,768,107,864,80C960,53,1056,75,1152,90.7C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+      background-size: cover;
+      animation: wave-animation 12s linear infinite;
+      opacity: 0.7;
+    }
+
+    .wave-2 {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 140px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%234c4177" fill-opacity="0.2" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,170.7C960,160,1056,192,1152,192C1248,192,1344,160,1392,144L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+      background-size: cover;
+      animation: wave-animation 18s linear infinite reverse;
+      opacity: 0.5;
+    }
+
+    @keyframes wave-animation {
+      0% {
+        background-position-x: 0;
+      }
+      100% {
+        background-position-x: 1000px;
+      }
+    }
+
+    /* Enhanced title with advanced animation and new colors */
+    h1 {
+      margin-bottom: 30px;
+      font-size: 3.5rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      position: relative;
+      text-align: center;
+      background: linear-gradient(90deg, #00c6ff, #7b4397, #0072ff, #00c6ff);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: animated-gradient 4s ease infinite;
+      text-shadow: 0 0 35px rgba(123, 67, 151, 0.7);
+    }
+
+    h1::after {
+      content: '🎵';
+      position: absolute;
+      font-size: 2rem;
+      right: -40px;
+      top: 0;
+      -webkit-text-fill-color: white;
+      filter: drop-shadow(0 0 10px rgba(0, 198, 255, 0.8));
+      animation: bounce 2s infinite;
+    }
+
+    h1::before {
+      content: '🎧';
+      position: absolute;
+      font-size: 2rem;
+      left: -40px;
+      top: 0;
+      -webkit-text-fill-color: white;
+      filter: drop-shadow(0 0 10px rgba(0, 114, 255, 0.8));
+      animation: bounce 2s infinite reverse;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @keyframes animated-gradient {
+      0% { background-position: 0% 50%; text-shadow: 0 0 20px rgba(0, 198, 255, 0.4); }
+      50% { background-position: 100% 50%; text-shadow: 0 0 30px rgba(123, 67, 151, 0.6); }
+      100% { background-position: 0% 50%; text-shadow: 0 0 20px rgba(0, 114, 255, 0.4); }
+    }
+
+    /* Enhanced music player UI */
+    .music-bar {
+      background: rgba(20, 30, 48, 0.8);
+      backdrop-filter: blur(12px);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 35px;
+      width: 700px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
+                  0 5px 15px rgba(255, 255, 255, 0.1),
+                  inset 0 0 20px rgba(255, 255, 255, 0.05);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 10;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .music-bar::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+      opacity: 0;
+      z-index: -1;
+      animation: shine 8s infinite;
+    }
+
+    @keyframes shine {
+      0%, 100% { opacity: 0; transform: scale(0.8); }
+      50% { opacity: 0.4; transform: scale(1); }
+    }
+
+    .music-bar:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 
+                  0 8px 25px rgba(255, 255, 255, 0.1),
+                  inset 0 0 25px rgba(255, 255, 255, 0.08);
+    }
+
+    .waveform {
+      height: 80px;
+      margin: 25px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .wave-bar {
+      width: 5px;
+      background: linear-gradient(to top, #7b4397, #00c6ff);
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(123, 67, 151, 0.5);
+      animation: wave 1.5s ease-in-out infinite;
+      transform-origin: bottom;
+      height: 10px;
+    }
+
+    .wave-bar:nth-child(odd) {
+      animation-delay: 0.2s;
+    }
+
+    .wave-bar:nth-child(even) {
+      animation-delay: 0.6s;
+    }
+
+    .wave-bar:nth-child(3n) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes wave {
+      0%, 100% { height: 10px; }
+      50% { height: 70px; }
+    }
+
+    .info-panel {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 20px;
+      padding: 15px 20px;
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .info-item {
+      text-align: center;
+      position: relative;
+      padding: 0 15px;
+    }
+
+    .info-item::after {
+      content: '';
+      position: absolute;
+      right: -5px;
+      top: 25%;
+      height: 50%;
+      width: 1px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .info-item:last-child::after {
+      display: none;
+    }
+
+    .info-label {
+      font-size: 0.9rem;
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+
+    .info-value {
+      font-size: 1.2rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, #00c6ff, #7b4397);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    /* Super fancy buttons with animated effects */
+    button {
+      background: rgba(20, 30, 48, 0.7);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    button::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(255, 255, 255, 0.15), transparent);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: -1;
+    }
+
+    button:hover {
+      transform: translateY(-5px) scale(1.05);
+    }
+
+    button:hover::after {
+      opacity: 1;
+      bottom: 0;
+    }
+
+    button:active {
+      transform: translateY(2px) scale(0.98);
+    }
+
+    .btn-icon {
+      font-size: 1.4rem;
+      filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
+      animation: icon-pulse 2s infinite;
+    }
+
+    @keyframes icon-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    .play-btn {
+      background: linear-gradient(45deg, #00c6ff, #0072ff);
+      box-shadow: 0 5px 15px rgba(0, 198, 255, 0.4);
+    }
+
+    .play-btn:hover {
+      box-shadow: 0 8px 25px rgba(0, 198, 255, 0.6);
+    }
+
+    .stop-btn {
+      background: linear-gradient(45deg, #ff416c, #ff4b2b);
+      box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+    }
+
+    .stop-btn:hover {
+      box-shadow: 0 8px 25px rgba(255, 65, 108, 0.6);
+    }
+
+    .home-btn {
+      background: linear-gradient(45deg, #7b4397, #dc2430);
+      box-shadow: 0 5px 15px rgba(123, 67, 151, 0.4);
+    }
+
+    .home-btn:hover {
+      box-shadow: 0 8px 25px rgba(123, 67, 151, 0.6);
+    }
+
+    .restart-btn {
+      background: linear-gradient(45deg, #3a7bd5, #00d2ff);
+      box-shadow: 0 5px 15px rgba(58, 123, 213, 0.4);
+    }
+
+    .restart-btn:hover {
+      box-shadow: 0 8px 25px rgba(58, 123, 213, 0.6);
+    }
+
+    /* Enhanced progress bar */
+    .progress-container {
+      width: 100%;
+      height: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      margin-top: 15px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(to right, #00c6ff, #7b4397);
+      width: 0;
+      border-radius: 10px;
+      position: relative;
+      box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+    }
+
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 15px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .progress-container:hover .progress-bar::after {
+      opacity: 1;
+    }
+
+    .duration-display {
+      font-size: 1.3rem;
+      margin-top: 15px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Enhanced music notes */
+    .music-note {
+      position: absolute;
+      font-size: 28px;
+      color: rgba(255, 255, 255, 0.7);
+      animation: float-note 20s linear infinite;
+      z-index: 1;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+    }
+
+    @keyframes float-note {
+      0% {
+        transform: translateY(100vh) translateX(-20px) rotate(0deg) scale(0.8);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+        transform: translateY(80vh) translateX(10px) rotate(45deg) scale(1);
+      }
+      50% {
+        transform: translateY(40vh) translateX(60px) rotate(180deg) scale(1.2);
+      }
+      90% {
+        opacity: 0.8;
+        transform: translateY(10vh) translateX(30px) rotate(315deg) scale(1);
+      }
+      100% {
+        transform: translateY(-100px) translateX(20px) rotate(360deg) scale(0.8);
+        opacity: 0;
+      }
+    }
+
+    /* Enhanced audio player */
+    audio {
+      width: 100%;
+      height: 45px;
+      margin-top: 15px;
+      border-radius: 50px;
+      background: rgba(0, 0, 0, 0.2);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    audio::-webkit-media-controls-panel {
+      background: rgba(20, 30, 48, 0.7);
+    }
+
+    audio::-webkit-media-controls-play-button {
+      background-color: rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+      transition: all 0.3s;
+    }
+
+    audio::-webkit-media-controls-play-button:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Pulse effects */
+    .pulse {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0) 100%);
+      opacity: 0;
+      z-index: -1;
+      animation: pulse 6s infinite;
+    }
+
+    .pulse-2 {
+      animation-delay: 3s;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.6);
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+
+    /* Visual equalizer behind player */
+    .visual-eq {
+      position: absolute;
+      bottom: -30px;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      z-index: -1;
+      opacity: 0.5;
+    }
+
+    .eq-bar {
+      width: 8px;
+      background: linear-gradient(to top, #00c6ff, #0072ff);
+      border-radius: 10px;
+      height: 5px;
+      animation: eq-animation 0.5s ease infinite alternate;
+    }
+
+    @keyframes eq-animation {
+      0% { height: 5px; }
+      100% { height: 40px; }
+    }
+
+    .eq-bar:nth-child(1) { animation-duration: 0.7s; }
+    .eq-bar:nth-child(2) { animation-duration: 0.6s; }
+    .eq-bar:nth-child(3) { animation-duration: 0.5s; }
+    .eq-bar:nth-child(4) { animation-duration: 0.4s; }
+    .eq-bar:nth-child(5) { animation-duration: 0.3s; }
+    .eq-bar:nth-child(6) { animation-duration: 0.4s; }
+    .eq-bar:nth-child(7) { animation-duration: 0.5s; }
+    .eq-bar:nth-child(8) { animation-duration: 0.6s; }
+    .eq-bar:nth-child(9) { animation-duration: 0.7s; }
+    .eq-bar:nth-child(10) { animation-duration: 0.8s; }
+  </style>
+</head>
+<body>
+  <!-- Enhanced Animated Background -->
+  <div class="bg-container">
+    <div class="bg-gradient"></div>
+    <div class="bg-particles" id="bg-particles"><div class="particle" style="width: 17.4938px; height: 17.4938px; left: 97.8029%; animation-duration: 24.7189s; animation-delay: 10.1394s;"></div><div class="particle" style="width: 15.6012px; height: 15.6012px; left: 91.0991%; animation-duration: 28.8135s; animation-delay: 18.7578s;"></div><div class="particle" style="width: 21.7487px; height: 21.7487px; left: 55.9143%; animation-duration: 24.1509s; animation-delay: 11.7787s;"></div><div class="particle" style="width: 13.4434px; height: 13.4434px; left: 96.5475%; animation-duration: 27.5159s; animation-delay: 10.5198s;"></div><div class="particle" style="width: 5.42565px; height: 5.42565px; left: 72.9278%; animation-duration: 18.8484s; animation-delay: 12.6943s;"></div><div class="particle" style="width: 21.0839px; height: 21.0839px; left: 85.6656%; animation-duration: 19.7835s; animation-delay: 3.61109s;"></div><div class="particle" style="width: 14.238px; height: 14.238px; left: 99.3307%; animation-duration: 28.5772s; animation-delay: 11.9925s;"></div><div class="particle" style="width: 7.43701px; height: 7.43701px; left: 46.0032%; animation-duration: 19.4378s; animation-delay: 1.13077s;"></div><div class="particle" style="width: 6.29706px; height: 6.29706px; left: 43.85%; animation-duration: 19.0397s; animation-delay: 11.939s;"></div><div class="particle" style="width: 10.0198px; height: 10.0198px; left: 92.1743%; animation-duration: 33.4662s; animation-delay: 12.0433s;"></div><div class="particle" style="width: 23.2062px; height: 23.2062px; left: 70.9475%; animation-duration: 18.5594s; animation-delay: 7.22733s;"></div><div class="particle" style="width: 14.8978px; height: 14.8978px; left: 28.1882%; animation-duration: 15.6326s; animation-delay: 10.0752s;"></div><div class="particle" style="width: 23.7605px; height: 23.7605px; left: 92.0669%; animation-duration: 15.3131s; animation-delay: 5.34396s;"></div><div class="particle" style="width: 13.3707px; height: 13.3707px; left: 13.8997%; animation-duration: 32.5582s; animation-delay: 10.5997s;"></div><div class="particle" style="width: 10.0387px; height: 10.0387px; left: 78.7584%; animation-duration: 21.4169s; animation-delay: 1.75673s;"></div><div class="particle" style="width: 12.7598px; height: 12.7598px; left: 8.91048%; animation-duration: 25.2341s; animation-delay: 11.4215s;"></div><div class="particle" style="width: 9.4889px; height: 9.4889px; left: 94.3554%; animation-duration: 19.9464s; animation-delay: 8.59632s;"></div><div class="particle" style="width: 11.2365px; height: 11.2365px; left: 45.7395%; animation-duration: 19.615s; animation-delay: 6.0704s;"></div><div class="particle" style="width: 17.0887px; height: 17.0887px; left: 10.4129%; animation-duration: 34.2516s; animation-delay: 13.5563s;"></div><div class="particle" style="width: 7.67738px; height: 7.67738px; left: 45.2076%; animation-duration: 22.8146s; animation-delay: 14.6004s;"></div><div class="particle" style="width: 8.5552px; height: 8.5552px; left: 60.0809%; animation-duration: 24.9215s; animation-delay: 4.10658s;"></div><div class="particle" style="width: 20.2689px; height: 20.2689px; left: 97.0174%; animation-duration: 32.53s; animation-delay: 11.6999s;"></div><div class="particle" style="width: 21.4173px; height: 21.4173px; left: 15.8129%; animation-duration: 32.7154s; animation-delay: 0.338912s;"></div><div class="particle" style="width: 12.039px; height: 12.039px; left: 94.6726%; animation-duration: 28.2298s; animation-delay: 17.7676s;"></div><div class="particle" style="width: 11.0364px; height: 11.0364px; left: 82.0839%; animation-duration: 28.9655s; animation-delay: 1.36037s;"></div><div class="particle" style="width: 15.0485px; height: 15.0485px; left: 11.5851%; animation-duration: 17.8053s; animation-delay: 11.3439s;"></div><div class="particle" style="width: 14.5886px; height: 14.5886px; left: 28.4168%; animation-duration: 27.9874s; animation-delay: 0.0452785s;"></div><div class="particle" style="width: 22.288px; height: 22.288px; left: 16.4672%; animation-duration: 15.9729s; animation-delay: 7.57027s;"></div><div class="particle" style="width: 14.7806px; height: 14.7806px; left: 62.6546%; animation-duration: 22.6642s; animation-delay: 2.00961s;"></div><div class="particle" style="width: 21.1657px; height: 21.1657px; left: 91.5327%; animation-duration: 29.6619s; animation-delay: 9.33306s;"></div><div class="particle" style="width: 24.4283px; height: 24.4283px; left: 65.8423%; animation-duration: 27.8018s; animation-delay: 7.12717s;"></div><div class="particle" style="width: 19.2771px; height: 19.2771px; left: 51.3519%; animation-duration: 15.4575s; animation-delay: 2.56585s;"></div><div class="particle" style="width: 15.1531px; height: 15.1531px; left: 62.5709%; animation-duration: 17.4268s; animation-delay: 7.78909s;"></div><div class="particle" style="width: 21.2366px; height: 21.2366px; left: 79.0306%; animation-duration: 23.1483s; animation-delay: 1.49779s;"></div><div class="particle" style="width: 7.78289px; height: 7.78289px; left: 69.6974%; animation-duration: 23.1944s; animation-delay: 3.23537s;"></div><div class="particle" style="width: 18.3395px; height: 18.3395px; left: 38.7584%; animation-duration: 33.7623s; animation-delay: 15.2104s;"></div><div class="particle" style="width: 20.7622px; height: 20.7622px; left: 11.3266%; animation-duration: 17.9076s; animation-delay: 3.51612s;"></div><div class="particle" style="width: 18.4936px; height: 18.4936px; left: 56.2641%; animation-duration: 18.5617s; animation-delay: 10.9762s;"></div><div class="particle" style="width: 22.3206px; height: 22.3206px; left: 23.3854%; animation-duration: 18.3931s; animation-delay: 8.20418s;"></div><div class="particle" style="width: 16.8489px; height: 16.8489px; left: 9.56835%; animation-duration: 19.3891s; animation-delay: 4.9552s;"></div><div class="particle" style="width: 9.04394px; height: 9.04394px; left: 86.976%; animation-duration: 15.5142s; animation-delay: 7.58772s;"></div><div class="particle" style="width: 11.3228px; height: 11.3228px; left: 85.157%; animation-duration: 30.7759s; animation-delay: 13.1881s;"></div><div class="particle" style="width: 9.69851px; height: 9.69851px; left: 92.7681%; animation-duration: 25.6776s; animation-delay: 8.30174s;"></div><div class="particle" style="width: 21.3224px; height: 21.3224px; left: 48.4377%; animation-duration: 25.2273s; animation-delay: 6.28062s;"></div><div class="particle" style="width: 20.5099px; height: 20.5099px; left: 73.8431%; animation-duration: 28.1073s; animation-delay: 13.5983s;"></div><div class="particle" style="width: 9.41983px; height: 9.41983px; left: 23.7246%; animation-duration: 29.762s; animation-delay: 15.7346s;"></div><div class="particle" style="width: 12.3587px; height: 12.3587px; left: 54.9521%; animation-duration: 30.2021s; animation-delay: 6.28683s;"></div><div class="particle" style="width: 17.8171px; height: 17.8171px; left: 76.1536%; animation-duration: 23.4741s; animation-delay: 1.59801s;"></div><div class="particle" style="width: 13.0774px; height: 13.0774px; left: 63.3145%; animation-duration: 18.1776s; animation-delay: 5.39415s;"></div><div class="particle" style="width: 7.30482px; height: 7.30482px; left: 3.12895%; animation-duration: 20.8822s; animation-delay: 18.3731s;"></div></div>
+    <div class="wave"></div>
+    <div class="wave-2"></div>
+    <div class="pulse"></div>
+    <div class="pulse pulse-2"></div>
+  </div>
+
+  <div id="music-notes-container"><div class="music-note" style="left: 6.76837%; font-size: 2.20566em; animation-duration: 21.4009s; animation-delay: 3.08216s; color: rgba(243, 255, 153, 0.7);">♬</div><div class="music-note" style="left: 40.3574%; font-size: 1.19201em; animation-duration: 17.3438s; animation-delay: 10.0814s; color: rgba(255, 253, 153, 0.7);">🎸</div><div class="music-note" style="left: 54.5125%; font-size: 0.900326em; animation-duration: 27.4621s; animation-delay: 19.1113s; color: rgba(241, 255, 153, 0.7);">♩</div><div class="music-note" style="left: 37.3077%; font-size: 1.95992em; animation-duration: 25.375s; animation-delay: 14.8824s; color: rgba(255, 248, 153, 0.7);">🎵</div><div class="music-note" style="left: 43.0365%; font-size: 0.964142em; animation-duration: 27.8689s; animation-delay: 8.29784s; color: rgba(255, 250, 153, 0.7);">♫</div><div class="music-note" style="left: 37.415%; font-size: 2.23153em; animation-duration: 26.3777s; animation-delay: 2.65071s; color: rgba(255, 194, 153, 0.7);">♩</div><div class="music-note" style="left: 8.79925%; font-size: 0.907398em; animation-duration: 27.9654s; animation-delay: 10.5383s; color: rgba(226, 255, 153, 0.7);">♪</div><div class="music-note" style="left: 11.0683%; font-size: 1.9494em; animation-duration: 18.5816s; animation-delay: 1.80567s; color: rgba(240, 255, 153, 0.7);">🎶</div><div class="music-note" style="left: 29.1586%; font-size: 1.67065em; animation-duration: 18.8187s; animation-delay: 1.66866s; color: rgba(255, 196, 153, 0.7);">🎺</div><div class="music-note" style="left: 23.5114%; font-size: 0.825913em; animation-duration: 19.182s; animation-delay: 4.19306s; color: rgba(223, 255, 153, 0.7);">🎼</div><div class="music-note" style="left: 67.7135%; font-size: 1.323em; animation-duration: 27.6784s; animation-delay: 3.45212s; color: rgba(255, 202, 153, 0.7);">♪</div><div class="music-note" style="left: 74.6638%; font-size: 1.21069em; animation-duration: 27.4273s; animation-delay: 14.7956s; color: rgba(255, 194, 153, 0.7);">♬</div><div class="music-note" style="left: 95.265%; font-size: 0.95529em; animation-duration: 26.6124s; animation-delay: 5.91172s; color: rgba(236, 255, 153, 0.7);">🎹</div><div class="music-note" style="left: 77.9212%; font-size: 2.00062em; animation-duration: 15.406s; animation-delay: 13.3436s; color: rgba(255, 238, 153, 0.7);">🎶</div><div class="music-note" style="left: 66.1257%; font-size: 0.85447em; animation-duration: 26.5125s; animation-delay: 8.0322s; color: rgba(255, 241, 153, 0.7);">♫</div><div class="music-note" style="left: 61.3066%; font-size: 1.11566em; animation-duration: 26.1117s; animation-delay: 15.7124s; color: rgba(255, 243, 153, 0.7);">🎼</div><div class="music-note" style="left: 79.3491%; font-size: 1.23372em; animation-duration: 29.8634s; animation-delay: 6.14141s; color: rgba(241, 255, 153, 0.7);">♩</div><div class="music-note" style="left: 75.91%; font-size: 2.07722em; animation-duration: 24.3159s; animation-delay: 7.41482s; color: rgba(248, 255, 153, 0.7);">🎵</div><div class="music-note" style="left: 60.9161%; font-size: 1.81539em; animation-duration: 18.7021s; animation-delay: 0.352075s; color: rgba(250, 255, 153, 0.7);">🎸</div><div class="music-note" style="left: 51.7772%; font-size: 1.85847em; animation-duration: 23.7342s; animation-delay: 12.6873s; color: rgba(255, 209, 153, 0.7);">♩</div><div class="music-note" style="left: 76.8294%; font-size: 2.18771em; animation-duration: 27.7851s; animation-delay: 17.9968s; color: rgba(248, 255, 153, 0.7);">🎵</div><div class="music-note" style="left: 99.7768%; font-size: 1.17605em; animation-duration: 26.1818s; animation-delay: 16.9673s; color: rgba(255, 201, 153, 0.7);">♩</div><div class="music-note" style="left: 45.9188%; font-size: 0.906561em; animation-duration: 19.0136s; animation-delay: 13.0389s; color: rgba(255, 213, 153, 0.7);">♩</div><div class="music-note" style="left: 17.5743%; font-size: 0.958891em; animation-duration: 25.3537s; animation-delay: 4.38069s; color: rgba(255, 213, 153, 0.7);">🎶</div><div class="music-note" style="left: 61.7108%; font-size: 1.55577em; animation-duration: 23.673s; animation-delay: 4.37732s; color: rgba(255, 214, 153, 0.7);">🎶</div><div class="music-note" style="left: 71.0352%; font-size: 0.800306em; animation-duration: 23.5072s; animation-delay: 18.0762s; color: rgba(255, 235, 153, 0.7);">♪</div><div class="music-note" style="left: 16.2117%; font-size: 1.2215em; animation-duration: 20.474s; animation-delay: 15.5671s; color: rgba(255, 190, 153, 0.7);">🎹</div><div class="music-note" style="left: 23.2393%; font-size: 1.57993em; animation-duration: 20.5426s; animation-delay: 4.55335s; color: rgba(253, 255, 153, 0.7);">🎵</div><div class="music-note" style="left: 17.9563%; font-size: 1.64821em; animation-duration: 24.6199s; animation-delay: 17.7414s; color: rgba(255, 196, 153, 0.7);">🎼</div><div class="music-note" style="left: 3.02931%; font-size: 1.98661em; animation-duration: 17.1282s; animation-delay: 18.3466s; color: rgba(255, 202, 153, 0.7);">🎹</div><div class="music-note" style="left: 62.2001%; font-size: 1.42353em; animation-duration: 24.447s; animation-delay: 3.35209s; color: rgba(255, 248, 153, 0.7);">🎸</div><div class="music-note" style="left: 20.9159%; font-size: 1.48111em; animation-duration: 16.1567s; animation-delay: 10.459s; color: rgba(228, 255, 153, 0.7);">🎼</div><div class="music-note" style="left: 35.4753%; font-size: 1.5042em; animation-duration: 19.8824s; animation-delay: 9.48348s; color: rgba(238, 255, 153, 0.7);">♩</div><div class="music-note" style="left: 45.0991%; font-size: 2.00212em; animation-duration: 22.2754s; animation-delay: 12.2763s; color: rgba(255, 206, 153, 0.7);">♫</div><div class="music-note" style="left: 9.68867%; font-size: 2.04882em; animation-duration: 25.9074s; animation-delay: 11.7461s; color: rgba(255, 255, 153, 0.7);">🎼</div><div class="music-note" style="left: 46.9118%; font-size: 1.72647em; animation-duration: 26.803s; animation-delay: 10.9113s; color: rgba(255, 224, 153, 0.7);">🎺</div><div class="music-note" style="left: 92.1502%; font-size: 2.23917em; animation-duration: 20.6038s; animation-delay: 2.89026s; color: rgba(255, 230, 153, 0.7);">🎵</div><div class="music-note" style="left: 91.7923%; font-size: 2.20168em; animation-duration: 22.614s; animation-delay: 11.9224s; color: rgba(255, 245, 153, 0.7);">🎵</div><div class="music-note" style="left: 28.8818%; font-size: 1.55478em; animation-duration: 25.9272s; animation-delay: 11.3978s; color: rgba(255, 240, 153, 0.7);">♩</div><div class="music-note" style="left: 1.95524%; font-size: 1.51em; animation-duration: 24.0745s; animation-delay: 4.35004s; color: rgba(255, 255, 153, 0.7);">🎺</div></div>
+
+  <h1>Vibe: Unlocked 🎧</h1>
+
+  <div class="music-bar">
+    <div class="info-panel">
+      <div class="info-item">
+        <div class="info-label">Mood</div>
+        <div class="info-value" id="mood-display">Happy</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Time</div>
+        <div class="info-value" id="time-display">Evening</div>
+      </div>
+    </div>
+    
+    <div class="waveform" id="waveform">
+      <!-- Wave bars will be added dynamically -->
+    <div class="wave-bar" style="animation-delay: 0s; animation-duration: 1.42892s;"></div><div class="wave-bar" style="animation-delay: 0.03s; animation-duration: 1.37994s;"></div><div class="wave-bar" style="animation-delay: 0.06s; animation-duration: 1.2378s;"></div><div class="wave-bar" style="animation-delay: 0.09s; animation-duration: 1.4939s;"></div><div class="wave-bar" style="animation-delay: 0.12s; animation-duration: 1.65078s;"></div><div class="wave-bar" style="animation-delay: 0.15s; animation-duration: 1.69447s;"></div><div class="wave-bar" style="animation-delay: 0.18s; animation-duration: 1.6648s;"></div><div class="wave-bar" style="animation-delay: 0.21s; animation-duration: 1.25201s;"></div><div class="wave-bar" style="animation-delay: 0.24s; animation-duration: 1.58142s;"></div><div class="wave-bar" style="animation-delay: 0.27s; animation-duration: 1.34223s;"></div><div class="wave-bar" style="animation-delay: 0.3s; animation-duration: 1.39189s;"></div><div class="wave-bar" style="animation-delay: 0.33s; animation-duration: 1.78241s;"></div><div class="wave-bar" style="animation-delay: 0.36s; animation-duration: 1.5372s;"></div><div class="wave-bar" style="animation-delay: 0.39s; animation-duration: 1.78607s;"></div><div class="wave-bar" style="animation-delay: 0.42s; animation-duration: 1.6916s;"></div><div class="wave-bar" style="animation-delay: 0.45s; animation-duration: 1.54322s;"></div><div class="wave-bar" style="animation-delay: 0.48s; animation-duration: 1.3676s;"></div><div class="wave-bar" style="animation-delay: 0.51s; animation-duration: 1.35459s;"></div><div class="wave-bar" style="animation-delay: 0.54s; animation-duration: 1.71439s;"></div><div class="wave-bar" style="animation-delay: 0.57s; animation-duration: 1.26003s;"></div><div class="wave-bar" style="animation-delay: 0.6s; animation-duration: 1.25415s;"></div><div class="wave-bar" style="animation-delay: 0.63s; animation-duration: 1.50697s;"></div><div class="wave-bar" style="animation-delay: 0.66s; animation-duration: 1.69292s;"></div><div class="wave-bar" style="animation-delay: 0.69s; animation-duration: 1.42635s;"></div><div class="wave-bar" style="animation-delay: 0.72s; animation-duration: 1.28582s;"></div><div class="wave-bar" style="animation-delay: 0.75s; animation-duration: 1.42065s;"></div><div class="wave-bar" style="animation-delay: 0.78s; animation-duration: 1.43786s;"></div><div class="wave-bar" style="animation-delay: 0.81s; animation-duration: 1.55376s;"></div><div class="wave-bar" style="animation-delay: 0.84s; animation-duration: 1.40034s;"></div><div class="wave-bar" style="animation-delay: 0.87s; animation-duration: 1.52459s;"></div></div>
+    
+    <div class="duration-display" id="duration-display">00:00 / 19:51</div>
+    
+    <div class="progress-container" id="progress-container">
+      <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
+    </div>
+    
+    <audio id="ragaPlayer" controls="" src="public/happy_evening.mp3"></audio>
+    
+    <div class="controls">
+      <button class="play-btn" id="playButton" onclick="playAudio()">
+        <span class="btn-icon">▶️</span> Play
+      </button>
+      <button class="stop-btn" id="pauseButton" onclick="pauseAudio()">
+        <span class="btn-icon">⏹</span> Pause
+      </button>
+      <button class="restart-btn" id="restartButton" onclick="restartAudio()">
+        <span class="btn-icon">🔄</span> Restart
+      </button>
+      <button class="home-btn" id="homeButton" onclick="goHome()">
+        <span class="btn-icon">🏠</span> Home
+      </button>
+    </div>
+    
+    <div class="visual-eq">
+      <div class="eq-bar"></div>
+      <div class="eq-bar"></div>
+      <div class="eq-bar"></div>
+      <div class="eq-bar"></div>
+      <div class="eq-bar"></div>
+      <div class="eq-bar"></div>
+      <div class="eq-bar"></div>
+      <div class="eq-bar"></div>
+      <div class="eq-bar"></div>
+      <div class="eq-bar"></div>
+    </div>
+  </div>
+
+  <script>
+    const audioMap = {
+      "happy_morning": "public/happy_morning.mp3",
+      "happy_afternoon": "public/happy_afternoon.mp3",
+      "happy_evening": "public/happy_evening.mp3",
+      "happy_night": "public/happy_night.mp3",
+      "calm_morning": "public/calm_morning.mp3",
+      "calm_afternoon": "public/calm_afternoon.mp3",
+      "calm_evening": "public/calm_evening.mp3",
+      "calm_night": "public/calm_night.mp3",
+      "romantic_morning": "public/romantic_morning.mp3",
+      "romantic_afternoon": "public/romantic_afternoon.mp3",
+      "romantic_evening": "public/romantic_evening.mp3",
+      "romantic_night": "public/romantic_night.mp3",
+      "sad_morning": "public/sad_morning.mp3",
+      "sad_afternoon": "public/sad_afternoon.mp3",
+      "sad_evening": "public/sad_evening.mp3",
+      "sad_night": "public/sad_night.mp3",
+      "energetic_morning": "public/energetic_morning.mp3",
+      "energetic_afternoon": "public/energetic_afternoon.mp3",
+      "energetic_evening": "public/energetic_evening.mp3",
+      "energetic_night": "public/energetic_night.mp3",
+      "excited_morning": "public/excited_morning.mp3",
+      "excited_afternoon": "public/excited_afternoon.mp3",
+      "excited_evening": "public/excited_evening.mp3",
+      "excited_night": "public/excited_night.mp3",
+      "meditative_morning": "public/meditative_morning.mp3",
+      "meditative_afternoon": "public/meditative_afternoon.mp3",
+      "meditative_evening": "public/meditative_evening.mp3",
+      "meditative_night": "public/meditative_night.mp3"
+    };
+
+    // Display formatted mood and time
+    const mood = localStorage.getItem("selectedMood") || "calm";
+    const time = localStorage.getItem("selectedTime") || "morning";
+    const key = `${mood}_${time}`;
+    const audioPath = audioMap[key] || "public/default.mp3";
+
+    document.getElementById("mood-display").textContent = mood.charAt(0).toUpperCase() + mood.slice(1);
+    document.getElementById("time-display").textContent = time.charAt(0).toUpperCase() + time.slice(1);
+
+    const audioPlayer = document.getElementById("ragaPlayer");
+    audioPlayer.src = audioPath;
+
+    // Enhanced Animated Background
+    function createParticles() {
+      const container = document.getElementById('bg-particles');
+      const numberOfParticles = 50;
+      
+      for (let i = 0; i < numberOfParticles; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        // Random size
+        const size = Math.random() * 20 + 5;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // Random positioning
+        const left = Math.random() * 100;
+        const delay = Math.random() * 20;
+        const duration = 15 + Math.random() * 20;
+        
+        particle.style.left = `${left}%`;
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.animationDelay = `${delay}s`;
+        
+        container.appendChild(particle);
+      }
+    }
+
+    // Create enhanced floating music notes
+    function createMusicNotes() {
+      const container = document.getElementById('music-notes-container');
+      const notes = ['♩', '♪', '♫', '♬', '🎵', '🎶', '🎼', '🎸', '🎹', '🎺'];
+      const numberOfNotes = 40;
+      
+      for (let i = 0; i < numberOfNotes; i++) {
+        const note = document.createElement('div');
+        note.className = 'music-note';
+        note.textContent = notes[Math.floor(Math.random() * notes.length)];
+        
+        // Random positioning and animation
+        const left = Math.random() * 100;
+        const delay = Math.random() * 20;
+        const duration = 15 + Math.random() * 15;
+        const size = 0.8 + Math.random() * 1.5;
+        
+        note.style.left = `${left}%`;
+        note.style.fontSize = `${size}em`;
+        note.style.animationDuration = `${duration}s`;
+        note.style.animationDelay = `${delay}s`;
+        
+        // Random color tint
+        const hue = Math.floor(Math.random() * 60) + 20;
+        note.style.color = `hsla(${hue}, 100%, 80%, 0.7)`;
+        
+        container.appendChild(note);
+      }
+    }
+
+    // Create enhanced waveform bars with reactive animation
+    function createWaveform() {
+      const waveformContainer = document.getElementById('waveform');
+      const barCount = 30;
+      
+      for (let i = 0; i < barCount; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'wave-bar';
+        
+        // Slightly different animation delay for each bar
+        bar.style.animationDelay = `${i * 0.03}s`;
+        
+        // Slightly different height for more natural look
+        const heightVar = Math.random() * 0.4 + 0.8;
+        bar.style.animationDuration = `${1.5 * heightVar}s`;
+        
+        waveformContainer.appendChild(bar);
+      }
+    }
+
+    // Audio functionality
+    let isPlaying = false;
+    let durationInterval;
+
+    function playAudio() {
+      audioPlayer.play();
+      isPlaying = true;
+      startDurationUpdate();
+      
+      // Add active state to waveform
+      document.querySelectorAll('.wave-bar').forEach(bar => {
+        bar.style.animationPlayState = 'running';
+      });
+      document.querySelectorAll('.eq-bar').forEach(bar => {
+        bar.style.animationPlayState = 'running';
+      });
+    }
+
+    function pauseAudio() {
+      audioPlayer.pause();
+      isPlaying = false;
+      clearInterval(durationInterval);
+      
+      // Pause animations
+      document.querySelectorAll('.wave-bar').forEach(bar => {
+        bar.style.animationPlayState = 'paused';
+      });
+      
+      document.querySelectorAll('.eq-bar').forEach(bar => {
+        bar.style.animationPlayState = 'paused';
+      });
+    }
+
+    function restartAudio() {
+      audioPlayer.currentTime = 0;
+      playAudio();
+    }
+
+    function goHome() {
+      window.location.href = 'feedback.html';
+    }
+
+    // Update progress bar and duration display
+    function startDurationUpdate() {
+      clearInterval(durationInterval);
+      durationInterval = setInterval(updateDuration, 1000);
+      updateDuration(); // Initial update
+    }
+
+    function updateDuration() {
+      const currentTime = audioPlayer.currentTime;
+      const duration = audioPlayer.duration || 0;
+      
+      // Format time display
+      const currentMinutes = Math.floor(currentTime / 60);
+      const currentSeconds = Math.floor(currentTime % 60);
+      const totalMinutes = Math.floor(duration / 60);
+      const totalSeconds = Math.floor(duration % 60);
+      
+      const formattedTime = `${currentMinutes.toString().padStart(2, '0')}:${currentSeconds.toString().padStart(2, '0')} / ${totalMinutes.toString().padStart(2, '0')}:${totalSeconds.toString().padStart(2, '0')}`;
+      
+      document.getElementById('duration-display').textContent = formattedTime;
+      
+      // Update progress bar
+      const progressPercent = (currentTime / duration) * 100;
+      document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+    }
+
+    // Allow clicking on progress bar to seek
+    document.getElementById('progress-container').addEventListener('click', function(e) {
+      const progressContainer = this.getBoundingClientRect();
+      const clickPosition = e.clientX - progressContainer.left;
+      const clickPercent = clickPosition / progressContainer.width;
+      
+      audioPlayer.currentTime = clickPercent * audioPlayer.duration;
+      updateDuration();
+    });
+
+    // Handle audio events
+    audioPlayer.addEventListener('ended', function() {
+      isPlaying = false;
+      clearInterval(durationInterval);
+    });
+
+    audioPlayer.addEventListener('play', function() {
+      playAudio();
+    });
+
+    audioPlayer.addEventListener('pause', function() {
+      pauseAudio();
+    });
+
+    // Initialize all animations and components
+    function init() {
+      createParticles();
+      createMusicNotes();
+      createWaveform();
+      
+      // Update visual equalizer
+      setInterval(() => {
+        if (isPlaying) {
+          document.querySelectorAll('.eq-bar').forEach(bar => {
+            const randomHeight = Math.random() * 35 + 5;
+            bar.style.height = `${randomHeight}px`;
+          });
+        }
+      }, 100);
+      
+      // Initialize progress bar
+      updateDuration();
+    }
+
+    // Start everything when page loads
+    window.addEventListener('load', init);
+    
+  </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+</body></html>
